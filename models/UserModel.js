@@ -2,29 +2,42 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+const UserCardsSchema = new Schema({
+	cardNumber: String,
+	exp: String
+	// "_id": false
+})
+
 var UserSchema = new Schema({
-	'name' : {
-		required: true,
-		type: String
-	},
+	'firstName' : String,
+	'lastName' : String,
+	'phone' : String,
 	'email' : String,
-	'gender' : String,
-	'age' : Number,
-	'image' : {
-		type: String,
-		default: 'placeholder.jpg'
+	'profile_img': {
+        type: String,
+        default: 'placeholder.jpg'
 	},
-	'wallet_balance' : {
+	'password' : String,
+	'otp' : {
 		type: Number,
 		default: 0
 	},
 	'status' : {
 		type: Boolean,
 		default: 1
-	}
+	},
+	'userType': {
+       type: String,
+	   enum: [1,2]       //1 => User 2=> Delivery
+	},
+	'wallet': {
+		type: Number,
+		default: 0
+	},
+	'cards': [UserCardsSchema]
 },{
 	timestamps: true
-});
+});	
 
 UserSchema.plugin(mongoosePaginate);
 

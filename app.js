@@ -12,9 +12,9 @@ const indexRouter = require('./routes/admin/index');
 const authRoutes = require('./routes/admin/auth');
 const userRoutes = require('./routes/admin/users');
 const cmsRoutes = require('./routes/admin/cms');
-const productRoutes = require('./routes/admin/product');
-const categoryRoutes = require('./routes/admin/category');
-const subCategoryRoutes = require('./routes/admin/subCategory');
+const postRoutes = require('./routes/admin/posts');
+const postBidRoutes = require('./routes/admin/bids');
+
 
 
 const db = require('./config/db');
@@ -38,9 +38,9 @@ app.use('/', indexRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api', cmsRoutes);
-app.use('/api', productRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', subCategoryRoutes);
+app.use('/api', postRoutes);
+app.use('/api', postBidRoutes);
+
 
 
 app.all('*',(req,res,next) =>{ 

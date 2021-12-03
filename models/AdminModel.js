@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 var AdminSchema = new Schema({
 	'email' : String,
-	'password' : String
+	'password' : String,
+	'profile' : String,
 },{
 	timestamps: true,
 });

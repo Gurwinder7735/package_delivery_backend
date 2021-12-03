@@ -29,21 +29,22 @@ exports.getCMS = catchAsync(async (req, res, next) => {
 
   let content = await Content.findOne(condition);
   // res.send('hi')
-  console.log(content);
+  console.log('content',content);
   return sendResponse(res, 1, 200, title, { content: content.value });
 });
 
 exports.updateCMS = catchAsync(async (req, res, next) => {
     
-  let requiredFields = ["content"];
+  let requiredFields = {
+      content: req.body.content,
+    }
 
-  let validate = validateInputs(req.body, requiredFields);
+    let nonRequired = {}
+
+    let validate = validateInputs(next,requiredFields,nonRequired);
 
   console.log("VALIDATE", validate);
 
-  if (validate) {
-    return sendResponse(res, 0, 400, validate);
-  }
 
   const { type } = req.params;
   condition = {};

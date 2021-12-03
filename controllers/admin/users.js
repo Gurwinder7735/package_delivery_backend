@@ -5,12 +5,13 @@ const { catchAsync } = require("../../helpers/errors");
 const { findByIdAndRemove } = require("../../models/UserModel");
 const User = require("../../models/UserModel");
 
-exports.getUser = async (req, res) => {
-  try {
-  } catch (err) {
-    console.log(err.message);
-  }
-};
+exports.getUser = catchAsync(async(req,res,next)=>{
+
+    let user = await User.findById(req.params.id);
+    console.log(user)
+    return sendResponse(res,1,200,"Get User SuccessFully!",user)
+
+});
 
 exports.getUsers = catchAsync(async (req, res, next) => {
 
@@ -19,7 +20,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
   if (req.query.search) {
     var users = await User.paginate(
         
-      { name: { $regex: ".*" + req.query.search + ".*" } },
+      { firstName: { $regex: ".*" + req.query.search + ".*" }, userType: req.query.role },
       {
         offset:
           req.query.page == 1
@@ -31,7 +32,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 
   } else {
     var users = await User.paginate (
-      {},
+      { userType: req.query.role },
       {
         offset:
           req.query.page == 1
@@ -79,7 +80,7 @@ exports.addUser = catchAsync(async (req, res, next) => {
 
     let validate = validateInputs(next,requiredFields,nonRequired);
     console.log('validate',validate)
-   return
+  //  return
 
     if(req.files){
       if (req.files && req.files.image && req.files.image.name) {

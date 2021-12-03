@@ -80,12 +80,14 @@ exports.validateInputs = (next, requiredFields, nonRequired = {}) => {
 	console.log('emptyFields',emptyFields)
 	if(emptyFields.length !== 0){
 		return next(new AppError(`${emptyFields.toString()} are required!`, 400))
+	}else{
+		return {
+			...requestData,
+			...requiredFields
+		}
+	
 	}
 
-	return {
-		...requestData,
-		...requiredFields
-	}
 
 	// requiredFields.forEach((e) => {
 	// 	if (!x.includes(e) || fields[e] == '') {
